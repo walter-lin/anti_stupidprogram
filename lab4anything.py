@@ -187,3 +187,14 @@
 # print(a)
 ##結論：1.一開始global宣告型態判斷不用理
 ##      2.有沒有return都可以傳出變數，但有無不良影響還待確認
+
+#實驗_陣列空格是否會被輸出
+
+# test = [1,2,3,]
+# test2 = [1 , 2 ,3 ,' ' ]
+
+# for i in range(3): 
+#     print(test[i],sep='\n')
+# for i in range(4):
+#     print(test2[i],sep='\n')
+## 結論：值得範圍是由逗號界定，但不會抓空值
