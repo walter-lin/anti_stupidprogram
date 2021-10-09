@@ -37,7 +37,7 @@ for col_index in range(0,6):
 
 #Combobox被選擇後的行為
 def combobox_selected(event):
-    print(event.widget) #範例
+    # print(event.widget) #範例
     print('entry：','good')
     
 RowSerNum = 0  #新增列_每列的編號
@@ -60,7 +60,7 @@ def Add_NewRow():
         EntryVar['Etr'] = tk.Entry(win ,font='Regular 10')
         EntryVar['Etr'].grid(column=i ,row=(RowSerNum+1) ,padx=6 ,ipady=5)
         EntryVar['Etr'].config(width=16)
-        EntryVar['Etr'].insert(0 ,sheet_data.present_value[i-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
+        EntryVar['Etr'].insert(0 ,sheet_data.presentVal[RowSerNum][i-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
         GetVar['Etr'+'Get'+str(i)] = EntryVar.get
         
     RowSerNum += 1
@@ -69,7 +69,7 @@ def Add_NewRow():
 
 for i in range(7):
     Add_NewRow()
-print(ComboVar,StrVar,EntryVar,GetVar,sep='\n')
+# print(ComboVar,StrVar,EntryVar,GetVar,sep='\n')
 
 
 
