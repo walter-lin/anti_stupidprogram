@@ -37,8 +37,12 @@ for col_index in range(0,6):
 
 #Combobox被選擇後的行為
 def combobox_selected(event):
-    # print(event.widget) #範例
-    print('entry：','good')
+    print(event.widget) #範例
+    # ans = event.widget.get()
+    # index = sheet_data.inspect.index(ans)
+    # for i in range(1,6):
+    #     EntryVar['Etr'].insert(0 ,sheet_data.presentVal[index][i-1]) 
+    
     
 RowSerNum = 0  #新增列_每列的編號
 ComboVar = {}  #存放Combobox變數及物件
