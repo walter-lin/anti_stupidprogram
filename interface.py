@@ -37,12 +37,13 @@ for col_index in range(0,6):
 
 #Combobox被選擇後的行為
 def combobox_selected(event):
-    print(event.widget) #範例
-    # ans = event.widget.get()
-    # index = sheet_data.inspect.index(ans)
-    # for i in range(1,6):
-    #     EntryVar['Etr'].insert(0 ,sheet_data.presentVal[index][i-1]) 
+    # print(event.widget) #範例
+    ans = event.widget.get()
+    index = sheet_data.inspect.index(ans)
+    for i in range(1,6):
+       EntryVar['Etr'+str(event.widget.RSNum)+'_'+str(i)].insert(0 ,sheet_data.presentVal[index][i-1])
     
+   
     
 RowSerNum = 0  #新增列_每列的編號
 ComboVar = {}  #存放Combobox變數及物件
@@ -60,12 +61,13 @@ def Add_NewRow():
     ComboVar['CoB'+str(RowSerNum)].current(RowSerNum)
     ComboVar['CoB'+str(RowSerNum)].grid(column=0 ,row=(RowSerNum+1) ,padx=6 ,ipady=5)
     ComboVar['CoB'+str(RowSerNum)].bind('<<ComboboxSelected>>',combobox_selected)
+    ComboVar['CoB'+str(RowSerNum)].RSNum = RowSerNum #自訂義方法儲存編號
     for i in range(1,6):
-        EntryVar['Etr'] = tk.Entry(win ,font='Regular 10')
-        EntryVar['Etr'].grid(column=i ,row=(RowSerNum+1) ,padx=6 ,ipady=5)
-        EntryVar['Etr'].config(width=16)
-        EntryVar['Etr'].insert(0 ,sheet_data.presentVal[RowSerNum][i-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
-        GetVar['Etr'+'Get'+str(i)] = EntryVar.get
+        EntryVar['Etr'+str(RowSerNum)+'_'+str(i)] = tk.Entry(win ,font='Regular 10')
+        EntryVar['Etr'+str(RowSerNum)+'_'+str(i)].grid(column=i ,row=(RowSerNum+1) ,padx=6 ,ipady=5)
+        EntryVar['Etr'+str(RowSerNum)+'_'+str(i)].config(width=16)
+        EntryVar['Etr'+str(RowSerNum)+'_'+str(i)].insert(0 ,sheet_data.presentVal[RowSerNum][i-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
+        GetVar['Etr'+str(RowSerNum)+'_'+str(i)+'Get'+str(i)] = EntryVar.get
         
     RowSerNum += 1
     return RowSerNum
@@ -73,6 +75,8 @@ def Add_NewRow():
 
 for i in range(7):
     Add_NewRow()
+    print(i)
+print(EntryVar)
 # print(ComboVar,StrVar,EntryVar,GetVar,sep='\n')
 
 

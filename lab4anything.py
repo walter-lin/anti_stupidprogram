@@ -142,14 +142,15 @@
 #         input_text = tk.Entry(win ,font='Regular 10')
 #         input_text.grid(column=entry_col_index ,row=(row_index+1) ,padx=6 ,ipady=5)
 #         input_text.config(width=16)
-#         insert_text = sheet_data.present_value[(entry_col_index-1)] #將文字取出
-#         input_text.insert(0 ,sheet_data.present_value[entry_col_index-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
+#         insert_text = sheet_data.presentVal_1[(entry_col_index-1)] #將文字取出
+#         input_text.insert(0 ,sheet_data.presentVal_1[entry_col_index-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
 #         var = input_text.get()
 # ComSerNum = 0 #Combobox編號
 
 # def combobox_selected(event):
 #     print(event,event.widget,event.widget.current(),sep='\n') #可以用widget帶出對應的變數
 #     print('2',event.widget.get(),sep='\n')
+#     print(event.widget.Num)
 
 
 # def Add_cobobox(Var,StrVar):
@@ -161,6 +162,7 @@
 #     Var.current(ComSerNum)
 #     Var.grid(column=0 ,row=(ComSerNum+1) ,padx=6 ,ipady=5)
 #     Var.bind('<<ComboboxSelected>>',combobox_selected)
+#     Var.Num = ComSerNum
     
 
 # for i in range(5):
@@ -168,10 +170,11 @@
     
 
 # win.mainloop()
-##小結果：透過全域變數能將值帶出
-##小結果：字典的Key的當作變數名稱，Valune能存放變數的值
-##結論：(1).widget方法可以回傳對應變數(例如 .!cobobox2)
-##     (2)使用lambda匿名函式可以增加傳入的參數
+# #小結果：透過全域變數能將值帶出
+# #小結果：字典的Key的當作變數名稱，Valune能存放變數的值
+# #結論：(1).widget方法可以回傳對應變數(例如 .!cobobox2)
+# #     (2)使用lambda匿名函式可以增加傳入的參數
+# #     (3)可以額外定義cb的方法，如：Var.Num =<值>，再使用event.widget.Num呼叫
 
 ###實驗_區域變數
 # def test(test):
