@@ -1,8 +1,8 @@
 import tkinter as tk
+from tkinter.constants import END
 import tkinter.ttk as ttk
 from typing import ValuesView
 import sheet_data
-
 
 win = tk.Tk()                   #定義視窗
 win.title('簡單輸入')            #視窗名稱
@@ -25,15 +25,6 @@ for col_index in range(0,6):
     lbl_1 = tk.Label(win, text=sheet_data.col_name[col_index], font='Regular 16')
     lbl_1.grid(column=col_index, row=0, padx=8 , pady=label_pady)
 
-#輸入列建立
-# for row_index in list(range(0,8)):
-#     for entry_col_index in range(1,6):
-#         input_text = tk.Entry(win ,font='Regular 10')
-#         input_text.grid(column=entry_col_index ,row=(row_index+1) ,padx=6 ,ipady=5)
-#         input_text.config(width=16)
-#         insert_text = sheet_data.preset_value[(entry_col_index-1)] #將文字取出
-#         input_text.insert(0 ,sheet_data.preset_value[entry_col_index-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
-#         var = input_text.get()
 
 #Combobox被選擇後的行為
 def combobox_selected(event):
@@ -41,9 +32,8 @@ def combobox_selected(event):
     ans = event.widget.get()
     index = sheet_data.inspect.index(ans)
     for i in range(1,6):
-       EntryVar['Etr'+str(event.widget.RSNum)+'_'+str(i)].insert(0 ,sheet_data.presentVal[index][i-1])
-    
-   
+        EntryVar['Etr'+str(event.widget.RSNum)+'_'+str(i)].delete(0,END) #entry清空
+        EntryVar['Etr'+str(event.widget.RSNum)+'_'+str(i)].insert(0 ,sheet_data.presentVal[index][i-1]) #插入值
     
 RowSerNum = 0  #新增列_每列的編號
 ComboVar = {}  #存放Combobox變數及物件
@@ -62,27 +52,20 @@ def Add_NewRow():
     ComboVar['CoB'+str(RowSerNum)].grid(column=0 ,row=(RowSerNum+1) ,padx=6 ,ipady=5)
     ComboVar['CoB'+str(RowSerNum)].bind('<<ComboboxSelected>>',combobox_selected)
     ComboVar['CoB'+str(RowSerNum)].RSNum = RowSerNum #自訂義方法儲存編號
-    for i in range(1,6):
-        EntryVar['Etr'+str(RowSerNum)+'_'+str(i)] = tk.Entry(win ,font='Regular 10')
-        EntryVar['Etr'+str(RowSerNum)+'_'+str(i)].grid(column=i ,row=(RowSerNum+1) ,padx=6 ,ipady=5)
-        EntryVar['Etr'+str(RowSerNum)+'_'+str(i)].config(width=16)
-        EntryVar['Etr'+str(RowSerNum)+'_'+str(i)].insert(0 ,sheet_data.presentVal[RowSerNum][i-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
-        GetVar['Etr'+str(RowSerNum)+'_'+str(i)+'Get'+str(i)] = EntryVar.get
+    for Col in range(1,6):
+        GetVar['Etr'+str(RowSerNum)+'_'+str(Col)+'Get'] = tk.StringVar
+        EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)] = tk.Entry(win ,font='Regular 10',
+        textvariable = GetVar['Etr'+str(RowSerNum)+'_'+str(Col)+'Get'])
+        EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)].grid(column=Col ,row=(RowSerNum+1) ,padx=6 ,ipady=5)
+        EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)].config(width=16)
+        EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)].insert(0 ,sheet_data.presentVal[RowSerNum][Col-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
         
     RowSerNum += 1
     return RowSerNum
-#目標：幫entry獲取的值設計變數。修正變數名稱
 
 for i in range(7):
     Add_NewRow()
     print(i)
-print(EntryVar)
-# print(ComboVar,StrVar,EntryVar,GetVar,sep='\n')
-
-
-
-
-
 
 # #建立圖片物件
 # img1 = tk.PhotoImage(file="wordicon.png")
@@ -96,7 +79,6 @@ print(EntryVar)
 # btn_pdf = tk.Button(text="轉成excel檔")
 # btn_pdf.grid(column=1,row=6,padx=60,pady=60)
 # btn_pdf.config(image=img2)
-
 
 
 win.mainloop()

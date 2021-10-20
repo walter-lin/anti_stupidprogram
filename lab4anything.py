@@ -113,7 +113,6 @@
 # #實驗_函式_新增欄位
 # import tkinter as tk
 # import tkinter.ttk as ttk
-# from typing import ValuesView
 # import sheet_data
 
 # win = tk.Tk()                   #定義視窗
@@ -201,3 +200,6 @@
 # for i in range(4):
 #     print(test2[i],sep='\n')
 ## 結論：值得範圍是由逗號界定，但不會抓空值
+
+
+
