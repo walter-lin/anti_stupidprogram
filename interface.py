@@ -21,8 +21,8 @@ zh_font = 'Regular 16'     #中文字體 大小 #Regular標楷體
 label_pady = 20            #label y填空
 
 #標題欄位建立
-for col_index in range(0,6):
-    lbl_1 = tk.Label(win, text=sheet_data.col_name[col_index], font='Regular 16')
+for col_index in range(1,7):
+    lbl_1 = tk.Label(win, text=sheet_data.col_name[col_index-1], font='Regular 16')
     lbl_1.grid(column=col_index, row=0, padx=8 , pady=label_pady)
 
 
@@ -49,14 +49,14 @@ def Add_NewRow():
     textvariable=StrVar['CoB'+'Get'+str(RowSerNum)])
     ComboVar['CoB'+str(RowSerNum)]['values'] =  sheet_data.inspect
     ComboVar['CoB'+str(RowSerNum)].current(RowSerNum)
-    ComboVar['CoB'+str(RowSerNum)].grid(column=0 ,row=(RowSerNum+1) ,padx=6 ,ipady=5)
+    ComboVar['CoB'+str(RowSerNum)].grid(column=1 ,row=(RowSerNum+1) ,padx=6 ,ipady=5)
     ComboVar['CoB'+str(RowSerNum)].bind('<<ComboboxSelected>>',combobox_selected)
     ComboVar['CoB'+str(RowSerNum)].RSNum = RowSerNum #自訂義方法儲存編號
     for Col in range(1,6):
         GetVar['Etr'+str(RowSerNum)+'_'+str(Col)+'Get'] = tk.StringVar
         EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)] = tk.Entry(win ,font='Regular 10',
         textvariable = GetVar['Etr'+str(RowSerNum)+'_'+str(Col)+'Get'])
-        EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)].grid(column=Col ,row=(RowSerNum+1) ,padx=6 ,ipady=5)
+        EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)].grid(column=Col+1 ,row=(RowSerNum+1) ,padx=6 ,ipady=5)
         EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)].config(width=16)
         EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)].insert(0 ,sheet_data.presentVal[RowSerNum][Col-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
         
