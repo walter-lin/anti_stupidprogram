@@ -6,7 +6,7 @@ import sheet_data
 
 win = tk.Tk()                   #定義視窗
 win.title('簡單輸入')            #視窗名稱
-win.geometry('1000x800')        #視窗大小
+win.geometry('1200x800')        #視窗大小
 win.resizable(0,0)              #視窗大小固定
 win.config(bg="#525252")        #視窗背景
 win.attributes("-alpha",0.9)    #透明度
@@ -49,17 +49,17 @@ def Add_NewRow():
     global GetVar
     StrVar['CoB'+'Get'+str(RowSerNum)] = tk.StringVar
     ComboVar['CoB'+str(RowSerNum)] = ttk.Combobox(win, state='readonly',
-    textvariable=StrVar['CoB'+'Get'+str(RowSerNum)], justify=tk.CENTER, font=zh_font)
+    textvariable=StrVar['CoB'+'Get'+str(RowSerNum)], justify='center', font=zh_font)
     ComboVar['CoB'+str(RowSerNum)]['values'] =  sheet_data.inspect
     ComboVar['CoB'+str(RowSerNum)].current(RowSerNum)
-    ComboVar['CoB'+str(RowSerNum)].grid(column=1 ,row=(RowSerNum+2)  ,padx=6 ,ipady=10, ipadx=10)
+    ComboVar['CoB'+str(RowSerNum)].grid(column=1 ,row=(RowSerNum*2+2) ,padx=6 ,ipady=10, ipadx=10,rowspan=2)
     ComboVar['CoB'+str(RowSerNum)].bind('<<ComboboxSelected>>',combobox_selected)
     ComboVar['CoB'+str(RowSerNum)].RSNum = RowSerNum #自訂義方法儲存編號
     for Col in range(1,6):
         GetVar['Etr'+str(RowSerNum)+'_'+str(Col)+'Get'] = tk.StringVar
         EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)] = tk.Entry(win , font=zh_font,
         textvariable = GetVar['Etr'+str(RowSerNum)+'_'+str(Col)+'Get'])
-        EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)].grid(column=Col+1 ,row=(RowSerNum+2) ,padx=6 ,ipady=10 ,ipadx=10)
+        EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)].grid(column=Col+1 ,row=(RowSerNum*2+2) ,padx=6 ,ipady=10 ,ipadx=10,rowspan=2)
         EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)].config(width=16)
         EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)].insert(0 ,sheet_data.presentVal[RowSerNum][Col-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
         
