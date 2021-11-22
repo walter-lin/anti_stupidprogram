@@ -11,13 +11,14 @@ win.resizable(0,0)              #視窗大小固定
 win.config(bg="#525252")        #視窗背景
 win.attributes("-alpha",0.9)    #透明度
 win.attributes("-topmost",0)    #視窗置頂
+
 #grid控制變數
 # label_wight = 130        #對應padx(x方向填空)
 # label_wight_inner = 0    #對應ipadx(內部x方向填空)
-# label_hight_inner = 0    #對應ipady(內部x方向填空)
+# label_hight_inner = 0    #對應ipady(內部y方向填空)
 
 #設定選項
-zh_font = 'Regular 14'     #中文字體 大小 #Regular標楷體
+zh_font = 'Regular 13'     #中文字體 大小 #Regular標楷體
 label_pady = 20            #label y填空
 
 #標題欄位建立
@@ -35,14 +36,14 @@ def combobox_selected(event):
     ans = event.widget.get()
     index = sheet_data.inspect.index(ans)
     for i in range(1,6):
-        EntryVar['Etr'+str(event.widget.RSNum)+'_'+str(i)].delete(0,END) #entry清空
-        EntryVar['Etr'+str(event.widget.RSNum)+'_'+str(i)].insert(0 ,sheet_data.presentVal[index][i-1]) #插入值
+        TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].delete(1.0,'end') #entry清空
+        TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].insert(1.0 ,sheet_data.presentVal[index][i-1]) #插入值
     
 RowSerNum = 0  #新增列_每列的編號
 ComboVar = {}  #存放Combobox變數及物件
 StrVar = {}    #存放Combobox字串變數及值
-EntryVar = {}  #存放Entry變數及物件
-GetVar = {}    #存放Entry值及儲存變數
+TextVar = {}  #存放Entry變數及物件
+
 #新增列
 def Add_NewRow():
     global RowSerNum
@@ -52,17 +53,14 @@ def Add_NewRow():
     textvariable=StrVar['CoB'+'Get'+str(RowSerNum)], justify='center', font=zh_font)
     ComboVar['CoB'+str(RowSerNum)]['values'] =  sheet_data.inspect
     ComboVar['CoB'+str(RowSerNum)].current(RowSerNum)
-    ComboVar['CoB'+str(RowSerNum)].grid(column=1 ,row=(RowSerNum*2+2) ,padx=6 ,ipady=10, ipadx=10,rowspan=2)
+    ComboVar['CoB'+str(RowSerNum)].grid(column=1 ,row=RowSerNum+2 ,padx=6 ,ipady=16, ipadx=20)
     ComboVar['CoB'+str(RowSerNum)].bind('<<ComboboxSelected>>',combobox_selected)
     ComboVar['CoB'+str(RowSerNum)].RSNum = RowSerNum #自訂義方法儲存編號
     for Col in range(1,6):
-        GetVar['Etr'+str(RowSerNum)+'_'+str(Col)+'Get'] = tk.StringVar
-        EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)] = tk.Entry(win , font=zh_font,
-        textvariable = GetVar['Etr'+str(RowSerNum)+'_'+str(Col)+'Get'])
-        EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)].grid(column=Col+1 ,row=(RowSerNum*2+2) ,padx=6 ,ipady=10 ,ipadx=10,rowspan=2)
-        EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)].config(width=16)
-        EntryVar['Etr'+str(RowSerNum)+'_'+str(Col)].insert(0 ,sheet_data.presentVal[RowSerNum][Col-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
-        
+        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)] = tk.Text(win,height=3,width=18)
+        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].grid(column=Col+1 ,row=RowSerNum+2 ,padx=6 )
+        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].insert(1.0 ,sheet_data.presentVal[RowSerNum][Col-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
+        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].configure(font=zh_font)
     RowSerNum += 1
     return RowSerNum
 
