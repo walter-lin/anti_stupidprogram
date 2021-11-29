@@ -1,12 +1,12 @@
 import tkinter as tk
-from tkinter.constants import END
+from tkinter.constants import ANCHOR, END
 import tkinter.ttk as ttk
 from typing import Literal, ValuesView
 import sheet_data
 
 win = tk.Tk()                   #定義視窗
 win.title('簡單輸入')            #視窗名稱
-win.geometry('1200x800')        #視窗大小
+win.geometry('1200x760')        #視窗大小
 win.resizable(0,0)              #視窗大小固定
 win.config(bg="#525252")        #視窗背景
 win.attributes("-alpha",0.9)    #透明度
@@ -27,8 +27,8 @@ for col_index in range(1,7):
     lbl_1.grid(column=col_index, row=1, padx=8 , pady=label_pady)
 
 #空白首欄建立
-# firstCol = tk.Label(win, bg="#525252")
-# firstCol.grid(column=0, row=0,padx=50 , pady=8)
+firstCol = tk.Label(win, bg="#525252")
+firstCol.grid(column=0, row=0,padx=16 , pady=6)
 
 #Combobox被選擇後的行為
 def combobox_selected(event):
@@ -50,17 +50,20 @@ def Add_NewRow():
     global GetVar
     StrVar['CoB'+'Get'+str(RowSerNum)] = tk.StringVar
     ComboVar['CoB'+str(RowSerNum)] = ttk.Combobox(win, state='readonly',
-    textvariable=StrVar['CoB'+'Get'+str(RowSerNum)], justify='center', font=zh_font)
+    textvariable=StrVar['CoB'+'Get'+str(RowSerNum)], justify='center', font=zh_font) #'center'置中
     ComboVar['CoB'+str(RowSerNum)]['values'] =  sheet_data.inspect
     ComboVar['CoB'+str(RowSerNum)].current(RowSerNum)
-    ComboVar['CoB'+str(RowSerNum)].grid(column=1 ,row=RowSerNum+2 ,padx=6 ,ipady=16, ipadx=20)
+    ComboVar['CoB'+str(RowSerNum)].grid(column=1 ,row=RowSerNum+2 ,padx=6 ,ipady=16, ipadx=18)
     ComboVar['CoB'+str(RowSerNum)].bind('<<ComboboxSelected>>',combobox_selected)
     ComboVar['CoB'+str(RowSerNum)].RSNum = RowSerNum #自訂義方法儲存編號
     for Col in range(1,6):
-        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)] = tk.Text(win,height=3,width=18)
+        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)] = tk.Text(win,height=3.5,width=23 )
         TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].grid(column=Col+1 ,row=RowSerNum+2 ,padx=6 )
         TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].insert(1.0 ,sheet_data.presentVal[RowSerNum][Col-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
-        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].configure(font=zh_font)
+        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].tag_add('configure',1.0,'end') 
+        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].tag_configure('configure',justify='center',font=zh_font)
+    
+        
     RowSerNum += 1
     return RowSerNum
 
@@ -68,19 +71,27 @@ for i in range(7):
     Add_NewRow()
     print(i)
 
-# #建立圖片物件
-# img1 = tk.PhotoImage(file="wordicon.png")
-# img2 = tk.PhotoImage(file="pdficon.png")
-# #按鈕>>轉成word檔
-# btn_word = tk.Button(text="轉成word檔")
-# btn_word.grid(column=0,row=6,padx=60,pady=60)
-# btn_word.config(image=img1)
+#建立圖片物件
+img1 = tk.PhotoImage(file="Pic/wordicon.png")
+img2 = tk.PhotoImage(file="Pic/pdficon.png")
+img3 = tk.PhotoImage(file="Pic/excelicon.png")
+btn_width = 100
+btn_height = 100 
+y_gap = 30
+#按鈕>>轉成word檔
+btn_word = tk.Button(text="轉成word檔")
+btn_word.grid(columnspan=2,column=1,row=RowSerNum+3,pady=y_gap)
+btn_word.config(image=img1)
 
-# #按鈕>>轉成execel檔
-# btn_pdf = tk.Button(text="轉成excel檔")
-# btn_pdf.grid(column=1,row=6,padx=60,pady=60)
-# btn_pdf.config(image=img2)
+#按鈕>>轉成pdf檔
+btn_pdf = tk.Button(text="轉成pdf檔")
+btn_pdf.grid(columnspan=2,column=3,row=RowSerNum+3,pady=y_gap)
+btn_pdf.config(image=img2)
 
+#按鈕>>轉成execel檔
+btn_pdf = tk.Button(text="轉成excel檔")
+btn_pdf.grid(columnspan=2,column=5,row=RowSerNum+3,pady=y_gap)
+btn_pdf.config(image=img3)
 
 win.mainloop()
 
