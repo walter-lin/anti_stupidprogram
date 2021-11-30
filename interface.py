@@ -34,10 +34,12 @@ firstCol.grid(column=0, row=0,padx=16 , pady=6)
 def combobox_selected(event):
     # print(event.widget) #範例
     ans = event.widget.get()
-    index = sheet_data.inspect.index(ans)
+    index = sheet_data.inspect.index(ans) #尋找目標在陣列中的位置
     for i in range(1,6):
         TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].delete(1.0,'end') #entry清空
         TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].insert(1.0 ,sheet_data.presentVal[index][i-1]) #插入值
+        TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].tag_add('configure',1.0,'end')
+        TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].tag_configure('configure',justify='center',font=zh_font)
     
 RowSerNum = 0  #新增列_每列的編號
 ComboVar = {}  #存放Combobox變數及物件
@@ -53,7 +55,7 @@ def Add_NewRow():
     textvariable=StrVar['CoB'+'Get'+str(RowSerNum)], justify='center', font=zh_font) #'center'置中
     ComboVar['CoB'+str(RowSerNum)]['values'] =  sheet_data.inspect
     ComboVar['CoB'+str(RowSerNum)].current(RowSerNum)
-    ComboVar['CoB'+str(RowSerNum)].grid(column=1 ,row=RowSerNum+2 ,padx=6 ,ipady=16, ipadx=18)
+    ComboVar['CoB'+str(RowSerNum)].grid(column=1 ,row=RowSerNum+2 ,padx=6 ,ipady=16, ipadx=6)
     ComboVar['CoB'+str(RowSerNum)].bind('<<ComboboxSelected>>',combobox_selected)
     ComboVar['CoB'+str(RowSerNum)].RSNum = RowSerNum #自訂義方法儲存編號
     for Col in range(1,6):
@@ -61,8 +63,7 @@ def Add_NewRow():
         TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].grid(column=Col+1 ,row=RowSerNum+2 ,padx=6 )
         TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].insert(1.0 ,sheet_data.presentVal[RowSerNum][Col-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
         TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].tag_add('configure',1.0,'end') 
-        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].tag_configure('configure',justify='center',font=zh_font)
-    
+        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].tag_configure('configure',justify='center',font=zh_font)  
         
     RowSerNum += 1
     return RowSerNum
