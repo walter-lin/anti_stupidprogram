@@ -1,12 +1,18 @@
 import tkinter as tk
-from tkinter.constants import ANCHOR, END
+from tkinter.constants import ANCHOR, COMMAND, END
 import tkinter.ttk as ttk
 from typing import Literal, ValuesView
 import sheet_data
 
-win = tk.Tk()                   #定義視窗
-win.title('簡單輸入')            #視窗名稱
-win.geometry('1200x760')        #視窗大小
+win = tk.Tk()                          #定義視窗
+win.title('簡單輸入')                  #視窗名稱
+scr_width = win.winfo_screenwidth()    #視窗寬度
+scr_height = win.winfo_screenheight()  #視窗高度
+width = 1200
+height = 700
+x = int((scr_width - width)/2)
+y = int((scr_height - height)/3)
+win.geometry('{}x{}+{}+{}'.format(width, height, x, y)) # 大小以及位置
 win.resizable(0,0)              #視窗大小固定
 win.config(bg="#525252")        #視窗背景
 win.attributes("-alpha",0.9)    #透明度
@@ -51,8 +57,11 @@ def Add_NewRow():
     global RowSerNum
     global GetVar
     StrVar['CoB'+'Get'+str(RowSerNum)] = tk.StringVar
-    ComboVar['CoB'+str(RowSerNum)] = ttk.Combobox(win, state='readonly',
-    textvariable=StrVar['CoB'+'Get'+str(RowSerNum)], justify='center', font=zh_font) #'center'置中
+    ComboVar['CoB'+str(RowSerNum)] = ttk.Combobox(win, 
+                                                  state='readonly', #只能讀取
+                                                  textvariable=StrVar['CoB'+'Get'+str(RowSerNum)], 
+                                                  justify='center',   #'Left'靠左 ,'center'置中,'right'靠右
+                                                  font=zh_font) #27行變數
     ComboVar['CoB'+str(RowSerNum)]['values'] =  sheet_data.inspect
     ComboVar['CoB'+str(RowSerNum)].current(RowSerNum)
     ComboVar['CoB'+str(RowSerNum)].grid(column=1 ,row=RowSerNum+2 ,padx=6 ,ipady=16, ipadx=6)
@@ -79,6 +88,15 @@ img3 = tk.PhotoImage(file="Pic/excelicon.png")
 btn_width = 100
 btn_height = 100 
 y_gap = 30
+
+#讀取表格文字
+def btn_exl():
+    for r in range(0,RowSerNum):
+        for c in range(1,6):
+            print(TextVar['Txt'+str(r)+'_'+str(c)].get('1.0','end'))
+
+
+
 #按鈕>>轉成word檔
 btn_word = tk.Button(text="轉成word檔")
 btn_word.grid(columnspan=2,column=1,row=RowSerNum+3,pady=y_gap)
@@ -90,7 +108,7 @@ btn_pdf.grid(columnspan=2,column=3,row=RowSerNum+3,pady=y_gap)
 btn_pdf.config(image=img2)
 
 #按鈕>>轉成execel檔
-btn_pdf = tk.Button(text="轉成excel檔")
+btn_pdf = tk.Button(text="轉成excel檔",command=btn_exl)
 btn_pdf.grid(columnspan=2,column=5,row=RowSerNum+3,pady=y_gap)
 btn_pdf.config(image=img3)
 

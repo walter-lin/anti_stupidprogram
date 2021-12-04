@@ -1,22 +1,24 @@
-import tkinter as tk
-from tkinter import ttk
+from tkinter import *
+import tkinter.ttk as ttk
 
-# --- functions ---
 
-def newselection(event, other):
-    print('selected:', event.widget.get())
-    print('other:', other)
+class Application:
 
-# --- main ---
+    def __init__(self, parent):
+        self.parent = parent
+        self.combo()
 
-root = tk.Tk()
+    def combo(self):
+        self.box_value = StringVar()
+        self.box = ttk.Combobox(self.parent, textvariable=self.box_value,font=("Helvetica",20))
+        
+        self.box['values'] = ('A', 'B', 'C')
+        self.box.current(0)
+        self.box.grid(column=0, row=0)
 
-cb1 = ttk.Combobox(root, values=('a', 'c', 'g', 't'))
-cb1.pack()
-cb1.bind("<<ComboboxSelected>>", lambda event:newselection(event, "Hello"))
-
-cb2 = ttk.Combobox(root, values=('X', 'Y', 'XX', 'XY'))
-cb2.pack()
-cb2.bind("<<ComboboxSelected>>", lambda event:newselection(event, "World"))
-
-root.mainloop()
+if __name__ == '__main__':
+    root = Tk()
+    app = Application(root)
+    root.mainloop()
+bigfont = tkFont.Font(family="Helvetica",size=20)
+root.option_add("*TCombobox*Listbox*Font", bigfont)
