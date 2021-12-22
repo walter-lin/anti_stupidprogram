@@ -96,3 +96,74 @@
 # doc.save('doc/AI 技術可以讓隱藏於暗處的物品現形.docx')
 
 ##結束
+
+## 解word範例的格式、修改表格內容
+
+# import docx
+# import sheet_data
+# doc = docx.Document('doc/慶育油品範例.docx')
+# tables = doc.tables
+# for i in range(1,len(tables[0].rows)):
+#     for j in range(1,len(tables[0].columns)):
+#         # tables[0].cell(i,j).text="貓糧"
+#         print(i,j)
+#印出每格文字
+# for col_index , n in enumerate(tables[0].rows):
+#     row_index = 0 
+#     for cell in n.cells:
+#         row_index += 1
+#         print(col_index,cell.text,'(',row_index,')')
+# #找尋x座標
+# coord_X = 0  
+# for i , n in enumerate(tables[0].rows):
+#     for cell in n.cells:
+#         if cell.text == sheet_data.col_name[0]:
+#             coord_X = i + 1
+#             print(cell.text)
+# #檢查x座標
+# print(coord_X,tables[0].cell(coord_X,0).text,sep='\n')
+  
+#目標 1.讀取表格每格內容 2.找尋標題 3.修改每格內容
+# doc.save('doc/scan.docx')
+#結果: 資料寬度：2 1 3 2 2 1
+
+#word表格值測試_關鍵覆蓋值
+# import docx
+# import sheet_data
+# doc = docx.Document('doc/慶育油品範例.docx')
+# tables = doc.tables
+# tables[0].cell(7,0).text="貓糧1"
+# tables[0].cell(7,1).text="貓糧2"
+# tables[0].cell(7,2).text="貓糧3"
+# tables[0].cell(7,3).text="貓糧4"
+# tables[0].cell(7,4).text="貓糧5"
+# tables[0].cell(7,5).text="貓糧6"
+# tables[0].cell(7,6).text="貓糧7"
+# tables[0].cell(7,7).text="貓糧8"
+# tables[0].cell(7,8).text="貓糧9"
+# tables[0].cell(7,10).text="貓糧10"
+
+# doc.save('doc/scan.docx')
+
+#結論: 最後一值(2 3 6 8 9 10)
+
+#word表格值測試_1347910
+# import docx
+# import sheet_data
+# doc = docx.Document('doc/慶育油品範例.docx')
+# tables = doc.tables
+
+# tables[0].cell(7,1).text="取代"
+# tables[0].cell(7,0).text="貓糧1"
+# tables[0].cell(7,2).text="貓糧3"
+# tables[0].cell(7,3).text="貓糧4"
+# # tables[0].cell(7,4).text="貓糧5"
+# # tables[0].cell(7,5).text="貓糧6"
+# tables[0].cell(7,6).text="貓糧7"
+# # tables[0].cell(7,7).text="貓糧8"
+# tables[0].cell(7,8).text="貓糧9"
+# tables[0].cell(7,10).text="貓糧10"
+
+# doc.save('doc/scan.docx')
+
+#結果: 1.改變其中一值便能修改表格值

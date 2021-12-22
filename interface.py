@@ -77,9 +77,9 @@ def Add_NewRow():
     RowSerNum += 1
     return RowSerNum
 
-for i in range(7):
+for i in range(7): #建立7列
     Add_NewRow()
-    print(i)
+    print('row:',i)
 
 #建立圖片物件
 img1 = tk.PhotoImage(file="Pic/wordicon.png")
@@ -89,11 +89,35 @@ btn_width = 100
 btn_height = 100 
 y_gap = 30
 
+import docx
+doc = docx.Document('doc/慶育油品範例.docx')
+tables = doc.tables  
+
+def scan_word():   
 #讀取表格文字
-def btn_exl():
-    for r in range(0,RowSerNum):
-        for c in range(1,6):
-            print(TextVar['Txt'+str(r)+'_'+str(c)].get('1.0','end'))
+    #找尋目標cell的x座標
+    coord_X = 0  
+    for i , n in enumerate(tables[0].rows):
+        for cell in n.cells:
+            if cell.text == sheet_data.col_name[0]: #找尋標題欄
+                coord_X = i + 1 #標題欄下一欄
+                print(cell.text,coord_X)
+                break
+        else:
+            continue
+        break 
+    #修改表格內容
+    for r in range(0,RowSerNum): #欄的數量
+        print(r)
+        #扣除首列之列的格子數量
+        for index_x,cell_y in enumerate([3,4,7,9,10]): #修正(word內實際出現次數)
+            repls_text = TextVar['Txt'+str(r)+'_'+str(index_x+1)].get('1.0','end-1c')#從視窗取得更新文字
+            #end為換行符號，-1c指向前一字元
+            cell_x = r+coord_X #標題欄位置+往後第幾欄
+            tables[0].cell(cell_x,cell_y).text= repls_text
+                
+    doc.save('doc/scan.docx')
+    
 
 
 
@@ -108,7 +132,7 @@ btn_pdf.grid(columnspan=2,column=3,row=RowSerNum+3,pady=y_gap)
 btn_pdf.config(image=img2)
 
 #按鈕>>轉成execel檔
-btn_pdf = tk.Button(text="轉成excel檔",command=btn_exl)
+btn_pdf = tk.Button(text="轉成excel檔",command=scan_word)
 btn_pdf.grid(columnspan=2,column=5,row=RowSerNum+3,pady=y_gap)
 btn_pdf.config(image=img3)
 
