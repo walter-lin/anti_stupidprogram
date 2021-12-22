@@ -117,9 +117,6 @@ def scan_word():
             tables[0].cell(cell_x,cell_y).text= repls_text
                 
     doc.save('doc/scan.docx')
-    
-
-
 
 #按鈕>>轉成word檔
 btn_word = tk.Button(text="轉成word檔")
