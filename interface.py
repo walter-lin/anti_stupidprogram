@@ -61,7 +61,7 @@ def Add_NewRow():
                                                   state='readonly', #只能讀取
                                                   textvariable=StrVar['CoB'+'Get'+str(RowSerNum)], 
                                                   justify='center',   #'Left'靠左 ,'center'置中,'right'靠右
-                                                  font=zh_font) #27行變數
+                                                  font=zh_font) #27行，字體變數
     ComboVar['CoB'+str(RowSerNum)]['values'] =  sheet_data.inspect
     ComboVar['CoB'+str(RowSerNum)].current(RowSerNum)
     ComboVar['CoB'+str(RowSerNum)].grid(column=1 ,row=RowSerNum+2 ,padx=6 ,ipady=16, ipadx=6)
@@ -93,6 +93,7 @@ import docx
 doc = docx.Document('doc/慶育油品範例.docx')
 tables = doc.tables  
 
+#word轉檔
 def scan_word():   
 #讀取表格文字
     #找尋目標cell的x座標
@@ -111,7 +112,8 @@ def scan_word():
         print(r)
         #扣除首列之列的格子數量
         for index_x,cell_y in enumerate([3,4,7,9,10]): #修正(word內實際出現次數)
-            repls_text = TextVar['Txt'+str(r)+'_'+str(index_x+1)].get('1.0','end-1c')#從視窗取得更新文字
+            repls_text = TextVar['Txt'+str(r)+'_'+str(index_x+1)].get('1.0','end-1c')
+            #從視窗取得更新文字
             #end為換行符號，-1c指向前一字元
             cell_x = r+coord_X #標題欄位置+往後第幾欄
             tables[0].cell(cell_x,cell_y).text= repls_text
