@@ -46,7 +46,11 @@ def combobox_selected(event):
         TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].insert(1.0 ,sheet_data.presentVal[index][i-1]) #插入值
         TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].tag_add('configure',1.0,'end')
         TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].tag_configure('configure',justify='center',font=zh_font)
-    
+#讓Text可以正常使用Tab鍵轉移聚焦
+def focus_next_widget(event):
+    event.widget.tk_focusNext().focus()
+    return("break")    
+
 RowSerNum = 0  #新增列_每列的編號
 ComboVar = {}  #存放Combobox變數及物件
 StrVar = {}    #存放Combobox字串變數及值
@@ -69,10 +73,11 @@ def Add_NewRow():
     ComboVar['CoB'+str(RowSerNum)].RSNum = RowSerNum #自訂義方法儲存編號
     for Col in range(1,6):
         TextVar['Txt'+str(RowSerNum)+'_'+str(Col)] = tk.Text(win,height=3.5,width=23 )
-        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].grid(column=Col+1 ,row=RowSerNum+2 ,padx=6 )
         TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].insert(1.0 ,sheet_data.presentVal[RowSerNum][Col-1]) #利用插入方法，設定預設值(第幾次元,插入文字)
         TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].tag_add('configure',1.0,'end') 
-        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].tag_configure('configure',justify='center',font=zh_font)  
+        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].tag_configure('configure',justify='center',font=zh_font) 
+        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].bind("<Tab>", focus_next_widget) #Tab鍵正常發揮函式
+        TextVar['Txt'+str(RowSerNum)+'_'+str(Col)].grid(column=Col+1 ,row=RowSerNum+2 ,padx=6 )
         
     RowSerNum += 1
     return RowSerNum
