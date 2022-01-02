@@ -200,3 +200,5 @@
 # for i in range(4):
 #     print(test2[i],sep='\n')
 ## 結論：值的範圍是由逗號界定，但不會抓空值
+
+## 實驗_炒冷飯_.configure方法測試

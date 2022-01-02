@@ -1,23 +1,20 @@
-# Importing tkinter module 
-# and all functions 
-from tkinter import *
-import tkinter 
-from tkinter.ttk import *
-  
-def focus_next_widget(event):
-    event.widget.tk_focusNext().focus()
-    return("break")
-
-window = Tk()
-window.title("What's Your Message?")
-window.configure(bg="black")
-tkinter.Label(window, text="Type Your Message:\n", bg="Black", fg="white", font="none 25 bold").pack(anchor=N)
-
-e = tkinter.Text(window, width=75, height=10,bg='white')
-e.pack()
-e.bind("<Tab>", focus_next_widget)
-a = tkinter.Button(text="轉成excel檔")
-a.pack()
-a.bind("<Tab>", focus_next_widget)
-
-window.mainloop()
+import tkinter as tk
+import tkinter.ttk as ttk
+ 
+root = tk.Tk()
+ 
+last_text = ''
+def text_change(event):
+    global last_text
+    got = text.get('1.0', 'end')
+    if got != last_text:
+        last_text = got
+        print('文本被修改了')
+ 
+text = tk.Text(root)
+text.bind('<Key>', text_change)
+text.grid(column=0,row=0)
+lab = tk.Text(root)
+lab.grid(column=0,row=1)
+ 
+root.mainloop()

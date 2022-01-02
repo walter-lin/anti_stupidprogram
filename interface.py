@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter.constants import ANCHOR, COMMAND, END
+from tkinter.constants import ANCHOR, COMMAND, END #方法
 import tkinter.ttk as ttk
 from typing import Literal, ValuesView
 import sheet_data
@@ -36,7 +36,7 @@ for col_index in range(1,7):
 firstCol = tk.Label(win, bg="#525252")
 firstCol.grid(column=0, row=0,padx=16 , pady=6)
 
-#Combobox被選擇後的行為
+#Combobox被選擇後
 def combobox_selected(event):
     # print(event.widget) #範例
     ans = event.widget.get()
@@ -45,11 +45,11 @@ def combobox_selected(event):
         TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].delete(1.0,'end') #entry清空
         TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].insert(1.0 ,sheet_data.presentVal[index][i-1]) #插入值
         TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].tag_add('configure',1.0,'end')
-        TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].tag_configure('configure',justify='center',font=zh_font)
 #讓Text可以正常使用Tab鍵轉移聚焦
 def focus_next_widget(event):
     event.widget.tk_focusNext().focus()
     return("break")    
+
 
 RowSerNum = 0  #新增列_每列的編號
 ComboVar = {}  #存放Combobox變數及物件
@@ -115,7 +115,7 @@ def scan_word():
     #修改表格內容
     for r in range(0,RowSerNum): #欄的數量
         print(r)
-        #扣除首列之列的格子數量
+        #扣除首列，每列的格子數量
         for index_x,cell_y in enumerate([3,4,7,9,10]): #修正(word內實際出現次數)
             repls_text = TextVar['Txt'+str(r)+'_'+str(index_x+1)].get('1.0','end-1c')
             #從視窗取得更新文字
@@ -124,6 +124,9 @@ def scan_word():
             tables[0].cell(cell_x,cell_y).text= repls_text
                 
     doc.save('doc/scan.docx')
+
+# def update_win():
+#     fdsaf
 
 #按鈕>>轉成word檔
 btn_word = tk.Button(text="轉成word檔")
