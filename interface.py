@@ -42,7 +42,7 @@ def combobox_selected(event):
     ans = event.widget.get()
     index = sheet_data.inspect.index(ans) #尋找目標在陣列中的位置
     for i in range(1,6):
-        TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].delete(1.0,'end') #entry清空
+        TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].delete(1.0,'end') #Text清空
         TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].insert(1.0 ,sheet_data.presentVal[index][i-1]) #插入值
         TextVar['Txt'+str(event.widget.RSNum)+'_'+str(i)].tag_add('configure',1.0,'end')
 #讓Text可以正常使用Tab鍵轉移聚焦
@@ -113,15 +113,16 @@ def scan_word():
             continue
         break 
     #修改表格內容
-    for r in range(0,RowSerNum): #欄的數量
+    for r in range(0,RowSerNum): #列的數量
         print(r)
         #扣除首列，每列的格子數量
+        tables[0].cell(cell_x,0).text= str(123456)
         for index_x,cell_y in enumerate([3,4,7,9,10]): #修正(word內實際出現次數)
-            repls_text = TextVar['Txt'+str(r)+'_'+str(index_x+1)].get('1.0','end-1c')
+            replas_text = TextVar['Txt'+str(r)+'_'+str(index_x+1)].get('1.0','end-1c')
             #從視窗取得更新文字
             #end為換行符號，-1c指向前一字元
-            cell_x = r+coord_X #標題欄位置+往後第幾欄
-            tables[0].cell(cell_x,cell_y).text= repls_text
+            cell_x = r+coord_X #往後第幾欄+標題欄下一欄的位置
+            tables[0].cell(cell_x,cell_y).text= replas_text
                 
     doc.save('doc/scan.docx')
 
