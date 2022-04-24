@@ -132,20 +132,21 @@
 # import sheet_data
 # doc = docx.Document('doc/慶育油品範例.docx')
 # tables = doc.tables
-# tables[0].cell(7,0).text="貓糧1"
-# tables[0].cell(7,1).text="貓糧2"
-# tables[0].cell(7,2).text="貓糧3"
-# tables[0].cell(7,3).text="貓糧4"
-# tables[0].cell(7,4).text="貓糧5"
-# tables[0].cell(7,5).text="貓糧6"
-# tables[0].cell(7,6).text="貓糧7"
-# tables[0].cell(7,7).text="貓糧8"
-# tables[0].cell(7,8).text="貓糧9"
+# tables[0].cell(7,0).text="貓糧0"
+# tables[0].cell(7,1).text="貓糧1"
+# tables[0].cell(7,2).text="貓糧2"
+# tables[0].cell(7,3).text="貓糧3"
+# tables[0].cell(7,4).text="貓糧4"
+# tables[0].cell(7,5).text="貓糧5"
+# tables[0].cell(7,6).text="貓糧6"
+# tables[0].cell(7,7).text="貓糧7"
+# tables[0].cell(7,8).text="貓糧8"
+# tables[0].cell(7,9).text="貓糧9"
 # tables[0].cell(7,10).text="貓糧10"
 
 # doc.save('doc/scan.docx')
 
-#結論: 最後一值(2 3 6 8 9 10)
+#結論: 最後一值(1 2 5 7 9 10)
 
 #word表格值測試_1347910
 # import docx

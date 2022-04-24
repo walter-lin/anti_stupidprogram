@@ -115,15 +115,16 @@ def scan_word():
     #修改表格內容
     for r in range(0,RowSerNum): #列的數量
         print(r)
+        cell_x = r+coord_X #往後第幾欄+標題欄下一欄的位置
+        replas_Combo = ComboVar['CoB'+str(r)].get()
+        tables[0].cell(cell_x,0).text = replas_Combo
         #扣除首列，每列的格子數量
-        tables[0].cell(cell_x,0).text= str(123456)
-        for index_x,cell_y in enumerate([3,4,7,9,10]): #修正(word內實際出現次數)
+        for index_x,cell_y in enumerate([2,5,7,9,10]): #修正(word內實際出現次數)
             replas_text = TextVar['Txt'+str(r)+'_'+str(index_x+1)].get('1.0','end-1c')
             #從視窗取得更新文字
             #end為換行符號，-1c指向前一字元
-            cell_x = r+coord_X #往後第幾欄+標題欄下一欄的位置
-            tables[0].cell(cell_x,cell_y).text= replas_text
-                
+            tables[0].cell(cell_x,cell_y).text=(str(cell_x)+str(cell_y)+replas_text)
+
     doc.save('doc/scan.docx')
 
 # def update_win():
