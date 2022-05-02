@@ -107,23 +107,28 @@ def scan_word():
         for cell in n.cells:
             if cell.text == sheet_data.col_name[0]: #找尋標題欄
                 coord_X = i + 1 #標題欄下一欄
-                print(cell.text,coord_X)
+                print('Found!(',cell.text,coord_X,')')
                 break
         else:
-            continue
-        break 
+            print('Not find target')
+            continue    
+        break
+    print('coordinate_find has done') 
     #修改表格內容
-    for r in range(0,RowSerNum): #列的數量
-        print(r)
-        cell_x = r+coord_X #往後第幾欄+標題欄下一欄的位置
-        replas_Combo = ComboVar['CoB'+str(r)].get()
-        tables[0].cell(cell_x,0).text = replas_Combo
-        #扣除首列，每列的格子數量
-        for index_x,cell_y in enumerate([2,5,7,9,10]): #修正(word內實際出現次數)
-            replas_text = TextVar['Txt'+str(r)+'_'+str(index_x+1)].get('1.0','end-1c')
-            #從視窗取得更新文字
-            #end為換行符號，-1c指向前一字元
-            tables[0].cell(cell_x,cell_y).text=(str(cell_x)+str(cell_y)+replas_text)
+    if coord_X != 0:
+        for r in range(0,RowSerNum): #列的數量
+            print("第",r,"列 印出成功")
+            cell_x = r+coord_X #往後第幾欄+標題欄下一欄的位置
+            replas_Combo = ComboVar['CoB'+str(r)].get()
+            tables[0].cell(cell_x,0).text = replas_Combo
+            #扣除首列，每列的格子數量
+            for index_x,cell_y in enumerate([2,5,7,9,10]): #修正(word內實際出現次數)
+                replas_text = TextVar['Txt'+str(r)+'_'+str(index_x+1)].get('1.0','end-1c')
+                #從視窗取得更新文字
+                #end為換行符號，-1c指向前一字元
+                tables[0].cell(cell_x,cell_y).text=replas_text
+    else:
+        print('pls check the sheet_data or the Valune of drop_down_menu')
 
     doc.save('doc/scan.docx')
 
