@@ -50,7 +50,6 @@ def focus_next_widget(event):
     event.widget.tk_focusNext().focus()
     return("break")    
 
-
 RowSerNum = 0  #新增列_每列的編號
 ComboVar = {}  #存放Combobox變數及物件
 StrVar = {}    #存放Combobox字串變數及值
